@@ -50,8 +50,13 @@ class HandleBucketEvent:
         LoggerUtility.setLevel()
         bucket_name, object_key = self.__fetchS3DetailsFromEvent(event)
         s3_head_object = self.__getS3HeadObject(bucket_name, object_key)
-        metadata_object = s3_head_object["Metadata"]
-        metadata_object["bucket-name"] = bucket_name
-        metadata_object["s3-key"] = object_key
-        LoggerUtility.logInfo("S3 METADATA"+ str(metadata_object))
-        self.__sendDatatoKinesis(metadata_object)
+        data_set = object_key.split("/")[0]
+        if data_set == "waze":
+            metadata_object = s3_head_object["Metadata"]
+            metadata_object["bucket-name"] = bucket_name
+            metadata_object["s3-key"] = object_key
+            LoggerUtility.logInfo("S3 METADATA"+ str(metadata_object))
+            self.__sendDatatoKinesis(metadata_object)
+            LoggerUtility.logInfo("Sent data to kinesis data stream")
+        else:
+            LoggerUtility.logInfo("Skipping sending data to kinesis for the data set:"+ data_set)
