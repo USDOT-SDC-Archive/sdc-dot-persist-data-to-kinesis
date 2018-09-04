@@ -83,7 +83,7 @@ LOG_LEVEL  - {log_level}
 
 #### Build Process
 
-**Step 1**: Setup virtual environment on your system by foloowing below link
+**Step 1**: Setup virtual environment on your system by following below link
 https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example-deployment-pkg.html#with-s3-example-deployment-pkg-python
 
 **Step 2**: Create a script with below contents e.g(sdc-dot-persist-data-to-kinesis.sh)
