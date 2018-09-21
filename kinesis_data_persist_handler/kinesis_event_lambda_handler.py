@@ -39,8 +39,9 @@ class HandleBucketEvent:
 
     def __sendDatatoKinesis(self, metadata_object):
         kinesis_client = boto3.client('kinesis', region_name='us-east-1')
+        kinesis_stream = os.environ["KINESIS_STREAM"]
         put_response = kinesis_client.put_record(
-            StreamName='persist-curated-data',
+            StreamName=kinesis_stream,
             Data=json.dumps(metadata_object),
             PartitionKey=str(datetime.datetime.utcnow())
         )
@@ -56,7 +57,11 @@ class HandleBucketEvent:
             metadata_object["bucket-name"] = bucket_name
             metadata_object["s3-key"] = object_key
             LoggerUtility.logInfo("S3 METADATA"+ str(metadata_object))
-            self.__sendDatatoKinesis(metadata_object)
-            LoggerUtility.logInfo("Sent data to kinesis data stream")
+            LoggerUtility.logInfo("Is historical:"+metadata_object["is-historical"])
+            if metadata_object["is-historical"] == "True":
+                LoggerUtility.logInfo("Historical Data found ,hence skipping sending it to kinesis")
+            else:
+                self.__sendDatatoKinesis(metadata_object)
+                LoggerUtility.logInfo("Sent data to kinesis data stream")
         else:
             LoggerUtility.logInfo("Skipping sending data to kinesis for the data set:"+ data_set)
