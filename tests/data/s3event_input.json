@@ -1,0 +1,22 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:us-east-1:911061262852:dev-dot-sdc-submissions-topic:3ce10b01-ff9f-4f9c-9f84-b4a9f4e9e897",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "8e7d94e8-637e-5804-945d-c1b0855ee477",
+        "TopicArn": "arn:aws:sns:us-east-1:911061262852:dev-dot-sdc-submissions-topic",
+        "Subject": "Amazon S3 Notification",
+        "Message": {"Records":[{"eventVersion":"2.1","eventSource":"aws:s3","awsRegion":"us-east-1","eventTime":"2019-05-17T16:39:59.967Z","eventName":"ObjectCreated:Put","userIdentity":{"principalId":"AWS:AROA5IH33UICH56MS6AGM:dev-dot-sdc-waze-data-ingestion"},"requestParameters":{"sourceIPAddress":"184.72.211.115"},"responseElements":{"x-amz-request-id":"BB8DC5A0ED397712","x-amz-id-2":"flNe0Wyr8+k9TEJVhFKSm3ExTAKGZ3cAyzvvf/FFju5HojbzE8Ag5QxEoiVkc5RE12q0azKI+bA="},"s3":{"s3SchemaVersion":"1.0","configurationId":"waze-create","bucket":{"name":"dev-dot-sdc-curated-911061262852-us-east-1","ownerIdentity":{"principalId":"A1MC188DCHAIRL"},"arn":"arn:aws:s3:::dev-dot-sdc-curated-911061262852-us-east-1"},"object":{"key":"waze/version%3D20180720/content/state%3DAK/table%3Dalert/projection%3Dredshift/year%3D2019/month%3D05/day%3D01/hour%3D00/minute%3D01/3e9a9c59-8eb7-41e4-92a0-ee4993428e5a.csv.gz","size":36989,"eTag":"f03ce8ae47592b95d0e955612e132ab3","versionId":"mRbKKXC588nWvsjnqWAEkhz2NQO94BCU","sequencer":"005CDEE3DFC9F6821A"}}}]},
+        "Timestamp": "2019-05-17T16:40:00.193Z",
+        "SignatureVersion": "1",
+        "Signature": "YBcBZXYikCR4BpuTk8uPSxyKJkfVaDM0f7Qztebtyf8VsOOMP6jISFLRXLJ8kFhh0jhKKyiAxrrXjGF9PX5Zo4gOZLAuNt3YImRvooCvlx3KpyRPIMW5R6WhMP4rN1oGIDGsUrCatouxR5pSYLZiro70Mn+SqK/KipIHDKK1JoWkplnDsxjBbguXVFvayZXONFkEQFGGqCnhG/52rmqor6v3G39Hvn5X+31V+aRKUKCWwaWACqYgmWfb0LqEGS667bnScalFkNx2NSmNcayJks94759aNikK7Yef23VRtF0Y23f4qq3Qkk7YULMjxqmq6E4ywyHYQvOthpz4sdbH+w==",
+        "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-6aad65c2f9911b05cd53efda11f913f9.pem",
+        "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:911061262852:dev-dot-sdc-submissions-topic:3ce10b01-ff9f-4f9c-9f84-b4a9f4e9e897",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}
