@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/usdot-jpo-sdc-projects/sdc-dot-persist-data-to-kinesis.svg?branch=master)](https://travis-ci.org/usdot-jpo-sdc-projects/sdc-dot-persist-data-to-kinesis)
 # sdc-dot-persist-data-to-kinesis
 This lambda function is developed by SDC Team for persisting the curated data to Kinesis Data Stream.
 
