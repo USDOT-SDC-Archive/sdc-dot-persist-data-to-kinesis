@@ -11,9 +11,7 @@ branches:
         - develop
 addons:
     sonarcloud:
-        organization: "usdot-jpo-sdc"
-        token:
-            secure: "XgxYrlrgaPAYLI9VKohBKd/zUfnYyY0b930ooQSVqEYk5p3D0KnBF53zUEUKlq0QulUKCwBO/VVPHJ2oGVvpl40u1eEZ9TwZRpy1bUkDaJz5NBr+NGR+xzRJpqGPoM/8DZ+jFbwsx5kMSbLSxkVmt0V1I0JXztXbTa/xNGuHp5MI+y0SazPVdvnSkxqWt13ZF8tYfOg5NMmx/ZPphQSoheaoM9ZHDod/YVwLhVOspz8mmB6RaWxOWHR5y8Zlhq848gGzFhFXghBcsdu58N33izlh2vvYmIlrvrAgbMtH7y+droasS2EVRpzKhsmG8VaSDRLtadR2vAhuV67R24BILN2WdQQbfRskTWoa4eYlLWcPeMpXzoyiq1ZodsVnXGjYo2H911Py02zwOe9J1O//xrVElmwSjnCW56rQW3h/vIoEOp9Fa1/9+VRK2jsE/Ri8TRU7uBvDXIVf3xfACE2F1X03GEWBK1UsdRoroQkKKCu4X4mxMb/p28aQVZtvYgRmRY76lCty/5V9hBJvGeQIc1bK+RQZCFvmHjbRi3Z1M5DgxxgqRP8oFf8F8janXwKq4aKLTOlhlrtY7pj0AKRGeoEXDaaw1MC3dgdVac2Ko0apTT0GZzGiHzzchy9b0nv6l/50pAHbR6jB7HPUj/uwFHTQ+u/FpL+7Q1unUW3TGJM="
+        organization: "usdot-jpo-sdc-projects"
 script:
     - coverage erase
     - coverage run -m pytest tests/test_persist_data_to_kinesis.py
