@@ -29,7 +29,6 @@ There are two primary functions that this lambda function serves:
 
 <a name="release-notes"/>
 
-
 ## [I. Release Notes](ReleaseNotes.md)
 TO BE UPDATED
 
