@@ -8,7 +8,6 @@ There are two primary functions that this lambda function serves:
 * **fetchS3DetailsFromEvent** - gets the S3 key from the event which is further used to get the metadata using S3 head object API.
 * **sendDatatoKinesis** - Pushes curated data in the Kinesis data stream.
 
-
 <a name="toc"/>
 
 ## Table of Contents
