@@ -11,6 +11,11 @@ from common.logger_utility import *
 class HandleBucketEvent:
 
     def fetchS3DetailsFromEvent(self, event):
+        """
+        Grab sns_message, bucket, and key from the event
+        :param event: A dictionary with a json object inside
+        :return:
+        """
         try:
             sns_message = json.loads(event["Records"][0]["Sns"]["Message"])
             bucket = sns_message["Records"][0]["s3"]["bucket"]["name"]
@@ -56,8 +61,8 @@ class HandleBucketEvent:
             metadata_object = s3_head_object["Metadata"]
             metadata_object["bucket-name"] = bucket_name
             metadata_object["s3-key"] = object_key
-            LoggerUtility.logInfo("S3 METADATA"+ str(metadata_object))
-            LoggerUtility.logInfo("Is historical:"+metadata_object["is-historical"])
+            LoggerUtility.logInfo("S3 METADATA" + str(metadata_object))
+            LoggerUtility.logInfo("Is historical:" + metadata_object["is-historical"])
             if metadata_object["is-historical"] == "True":
                 LoggerUtility.logInfo("Historical Data found ,hence skipping sending it to kinesis")
             else:

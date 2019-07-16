@@ -10,3 +10,4 @@
 .pytest_cache/**
 .coverage
 html_coverage_reports/**
+venv/**
