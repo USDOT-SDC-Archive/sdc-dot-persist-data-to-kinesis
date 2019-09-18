@@ -1,4 +1,4 @@
-from kinesis_data_persist_handler.kinesis_event_lambda_handler import *
+from lambdas.kinesis_event_lambda_handler import *
 
 
 def lambda_handler(event, context):
