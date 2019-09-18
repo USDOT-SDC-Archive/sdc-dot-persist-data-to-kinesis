@@ -1,4 +1,4 @@
-from moto import mock_events, mock_kinesis, mock_s3
+from moto import mock_kinesis, mock_s3
 import sys
 import os
 import json

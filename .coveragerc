@@ -2,7 +2,7 @@
 branch = True
 include=
     # Include the following source code folders
-    **/kinesis_data_persist_handler/**
+    **/lambdas/**
     **/tests/**
 
 [report]
