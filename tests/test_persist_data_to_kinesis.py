@@ -1,10 +1,10 @@
-from moto import mock_events, mock_kinesis, mock_s3
+from moto import mock_kinesis, mock_s3
 import sys
 import os
 import json
 import boto3
 import pytest
-from kinesis_data_persist_handler.kinesis_event_lambda_handler import HandleBucketEvent
+from lambdas.kinesis_event_lambda_handler import HandleBucketEvent
 from unittest import mock
 from common.logger_utility import LoggerUtility
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
