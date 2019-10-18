@@ -1,14 +1,16 @@
-from moto import mock_kinesis, mock_s3
-import sys
-import os
 import json
+import os
+import sys
+from unittest import mock
+
 import boto3
 import pytest
-from lambdas.kinesis_event_lambda_handler import HandleBucketEvent
-from unittest import mock
-from common.logger_utility import LoggerUtility
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from moto import mock_kinesis, mock_s3
 
+from common.logger_utility import LoggerUtility
+from lambdas.kinesis_event_lambda_handler import HandleBucketEvent
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 # setup
 
@@ -48,7 +50,7 @@ def test_send_data_to_kinesis():
     metadata_object["s3-key"] = s3_key
     metadata_object["is-historical"] = "false"
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    persist_data_to_kinesis_obj.sendDatatoKinesis(metadata_object)
+    persist_data_to_kinesis_obj.send_data_to_kinesis(metadata_object)
     assert True
 
 
@@ -59,13 +61,13 @@ def test_get_s3_head_object():
     s3_client.create_bucket(Bucket=bucket_name)
     s3_client.put_object(Bucket=bucket_name, Body=file_name, Key=s3_key)
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    persist_data_to_kinesis_obj.getS3HeadObject(bucket_name, s3_key)
+    persist_data_to_kinesis_obj.get_s3_head_object(bucket_name, s3_key)
     assert True
 
 
 def test_fetch_s3_details_from_event():
     """
-    Test that fetchS3DetailsFromEvent returns the correct values from an event.
+    Test that fetch_s3_details_from_event returns the correct values from an event.
     """
     message = {
         "Records": [
@@ -94,7 +96,7 @@ def test_fetch_s3_details_from_event():
     }
 
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    bucket, key = persist_data_to_kinesis_obj.fetchS3DetailsFromEvent(event)
+    bucket, key = persist_data_to_kinesis_obj.fetch_s3_details_from_event(event)
 
     assert bucket == "bucket"
     assert key == "key"
@@ -102,9 +104,9 @@ def test_fetch_s3_details_from_event():
 
 def test_fetch_s3_details_from_event_exception():
     """
-    Tests that LoggerUtility.logError is called when the event's Message is None.
+    Tests that LoggerUtility.log_error is called when the event's Message is None.
     """
-    LoggerUtility.logError = mock.MagicMock()
+    LoggerUtility.log_error = mock.MagicMock()
     persist_data_to_kinesis_obj = HandleBucketEvent()
 
     with pytest.raises(TypeError):
@@ -118,53 +120,53 @@ def test_fetch_s3_details_from_event_exception():
 
             ]
         }
-        persist_data_to_kinesis_obj.fetchS3DetailsFromEvent(event)
+        persist_data_to_kinesis_obj.fetch_s3_details_from_event(event)
 
-    LoggerUtility.logError.assert_called()
+    LoggerUtility.log_error.assert_called()
 
 
 def test_handle_bucket_event_historical():
     """
-    Verify that handleBucketEvent doesn't call sendDatatoKinesis when historical data passed in.
+    Verify that handle_bucket_event doesn't call send_data_to_kinesis when historical data passed in.
     """
 
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    persist_data_to_kinesis_obj.fetchS3DetailsFromEvent = mock_fetch_s3_details_from_event
-    persist_data_to_kinesis_obj.getS3HeadObject = mock_get_s3_head_object
-    persist_data_to_kinesis_obj.sendDatatoKinesis = mock.MagicMock()
+    persist_data_to_kinesis_obj.fetch_s3_details_from_event = mock_fetch_s3_details_from_event
+    persist_data_to_kinesis_obj.get_s3_head_object = mock_get_s3_head_object
+    persist_data_to_kinesis_obj.send_data_to_kinesis = mock.MagicMock()
 
-    persist_data_to_kinesis_obj.handleBucketEvent("event", None)
+    persist_data_to_kinesis_obj.handle_bucket_event("event")
 
-    assert not persist_data_to_kinesis_obj.sendDatatoKinesis.called
+    assert not persist_data_to_kinesis_obj.send_data_to_kinesis.called
 
 
 def test_handle_bucket_event_not_historical():
     """
-    Verify that handleBucketEvent calls sendDatatoKinesis when the metadata isn't historical.
+    Verify that handle_bucket_event calls send_data_to_kinesis when the metadata isn't historical.
     """
 
     mock_s3_head_object["Metadata"]["is-historical"] = "False"
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    persist_data_to_kinesis_obj.fetchS3DetailsFromEvent = mock_fetch_s3_details_from_event
-    persist_data_to_kinesis_obj.getS3HeadObject = mock_get_s3_head_object
-    persist_data_to_kinesis_obj.sendDatatoKinesis = mock.MagicMock()
+    persist_data_to_kinesis_obj.fetch_s3_details_from_event = mock_fetch_s3_details_from_event
+    persist_data_to_kinesis_obj.get_s3_head_object = mock_get_s3_head_object
+    persist_data_to_kinesis_obj.send_data_to_kinesis = mock.MagicMock()
 
-    persist_data_to_kinesis_obj.handleBucketEvent("event", None)
+    persist_data_to_kinesis_obj.handle_bucket_event("event")
 
-    persist_data_to_kinesis_obj.sendDatatoKinesis.assert_called_once_with(mock_s3_head_object["Metadata"])
+    persist_data_to_kinesis_obj.send_data_to_kinesis.assert_called_once_with(mock_s3_head_object["Metadata"])
 
 
 def test_handle_bucket_event_not_waze():
     """
-    Verify that handleBucketEvent doesn't call sendDatatoKinesis when the data_set != "waze"
+    Verify that handle_bucket_event doesn't call send_data_to_kinesis when the data_set != "waze"
     """
 
     mock_s3_head_object["Metadata"]["is-historical"] = "False"
     persist_data_to_kinesis_obj = HandleBucketEvent()
-    persist_data_to_kinesis_obj.fetchS3DetailsFromEvent = mock_fetch_s3_details_from_event_not_waze
-    persist_data_to_kinesis_obj.getS3HeadObject = mock_get_s3_head_object
-    persist_data_to_kinesis_obj.sendDatatoKinesis = mock.MagicMock()
+    persist_data_to_kinesis_obj.fetch_s3_details_from_event = mock_fetch_s3_details_from_event_not_waze
+    persist_data_to_kinesis_obj.get_s3_head_object = mock_get_s3_head_object
+    persist_data_to_kinesis_obj.send_data_to_kinesis = mock.MagicMock()
 
-    persist_data_to_kinesis_obj.handleBucketEvent("event", None)
+    persist_data_to_kinesis_obj.handle_bucket_event("event")
 
-    assert not persist_data_to_kinesis_obj.sendDatatoKinesis.called
+    assert not persist_data_to_kinesis_obj.send_data_to_kinesis.called
