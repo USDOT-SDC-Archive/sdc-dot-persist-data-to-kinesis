@@ -64,14 +64,14 @@ class HandleBucketEvent:
                 metadata_object = s3_head_object["Metadata"]
                 metadata_object["bucket-name"] = bucket_name
                 metadata_object["s3-key"] = object_key
-                LoggerUtility.logInfo("S3 METADATA" + str(metadata_object))
-                LoggerUtility.logInfo("Is historical:" + metadata_object["is-historical"])
+                LoggerUtility.log_info("S3 METADATA" + str(metadata_object))
+                LoggerUtility.log_info("Is historical:" + metadata_object["is-historical"])
                 if metadata_object["is-historical"] == "True":
-                    LoggerUtility.logInfo("Historical Data found ,hence skipping sending it to kinesis")
+                    LoggerUtility.log_info("Historical Data found ,hence skipping sending it to kinesis")
                 else:
                     self.sendDatatoKinesis(metadata_object)
-                    LoggerUtility.logInfo("Sent data to kinesis data stream")
+                    LoggerUtility.log_info("Sent data to kinesis data stream")
             else:
-                LoggerUtility.logInfo("Skipping sending to Kinesis for table " + table)
+                LoggerUtility.log_info("Skipping sending to Kinesis for table " + table)
         else:
-            LoggerUtility.logInfo("Skipping sending data to kinesis for the data set:"+ data_set)
+            LoggerUtility.log_info("Skipping sending data to kinesis for the data set:" + data_set)
