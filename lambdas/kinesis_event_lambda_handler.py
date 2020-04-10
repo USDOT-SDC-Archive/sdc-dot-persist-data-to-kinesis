@@ -59,15 +59,19 @@ class HandleBucketEvent:
         s3_head_object = self.get_s3_head_object(bucket_name, object_key)
         data_set = object_key.split("/")[0]
         if data_set == "waze":
-            metadata_object = s3_head_object["Metadata"]
-            metadata_object["bucket-name"] = bucket_name
-            metadata_object["s3-key"] = object_key
-            LoggerUtility.log_info("S3 METADATA" + str(metadata_object))
-            LoggerUtility.log_info("Is historical:" + metadata_object["is-historical"])
-            if metadata_object["is-historical"] == "True":
-                LoggerUtility.log_info("Historical Data found ,hence skipping sending it to kinesis")
+            table = object_key.split("/")[4]
+            if table == "table=alert":
+                metadata_object = s3_head_object["Metadata"]
+                metadata_object["bucket-name"] = bucket_name
+                metadata_object["s3-key"] = object_key
+                LoggerUtility.logInfo("S3 METADATA" + str(metadata_object))
+                LoggerUtility.logInfo("Is historical:" + metadata_object["is-historical"])
+                if metadata_object["is-historical"] == "True":
+                    LoggerUtility.logInfo("Historical Data found ,hence skipping sending it to kinesis")
+                else:
+                    self.sendDatatoKinesis(metadata_object)
+                    LoggerUtility.logInfo("Sent data to kinesis data stream")
             else:
-                self.send_data_to_kinesis(metadata_object)
-                LoggerUtility.log_info("Sent data to kinesis data stream")
+                LoggerUtility.logInfo("Skipping sending to Kinesis for table " + table)
         else:
-            LoggerUtility.log_info("Skipping sending data to kinesis for the data set:" + data_set)
+            LoggerUtility.logInfo("Skipping sending data to kinesis for the data set:"+ data_set)
