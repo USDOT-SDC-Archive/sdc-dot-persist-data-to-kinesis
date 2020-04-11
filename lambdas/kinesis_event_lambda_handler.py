@@ -69,7 +69,7 @@ class HandleBucketEvent:
                 if metadata_object["is-historical"] == "True":
                     LoggerUtility.log_info("Historical Data found ,hence skipping sending it to kinesis")
                 else:
-                    self.sendDatatoKinesis(metadata_object)
+                    self.send_data_to_kinesis(metadata_object)
                     LoggerUtility.log_info("Sent data to kinesis data stream")
             else:
                 LoggerUtility.log_info("Skipping sending to Kinesis for table " + table)
