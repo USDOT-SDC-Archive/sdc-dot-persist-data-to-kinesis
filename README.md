@@ -31,7 +31,9 @@ There are two primary functions that this lambda function serves:
 <a name="release-notes"/>
 
 ## [I. Release Notes](ReleaseNotes.md)
-TO BE UPDATED
+<strong>April 17, 2020. SDC persist data to kinesis Release 2.0</strong><br/>
+What's New in Release 2.0:
+- Only Waze alert data is now being pushed to kinesis and therefore only alert data will be persisted into the Redshift database going forward. The other types (jams, jam point sequences, irregularities) are still present in the datalake.
 
 <a name="overview"/>
 
